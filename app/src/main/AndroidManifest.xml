@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:name=".Heroes"
         android:allowBackup="true"
@@ -14,7 +15,17 @@
         android:theme="@style/Theme.Heroes"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".search.SearchHeroActivity"
+            android:exported="false"
+            android:label="@string/title_activity_search_hero"
+            android:theme="@style/Theme.Heroes" />
+        <activity
+            android:name=".favorite.FavoriteHeroActivity"
+            android:exported="false"
+            android:label="@string/title_activity_favorite"
+            android:theme="@style/Theme.Heroes" />
+        <activity
+            android:name=".home.HomeActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Heroes">

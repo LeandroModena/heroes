@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.gradle.utils.loadPropertyFromResources
 import java.util.Properties
 
 plugins {
@@ -15,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId = "dev.modena.heroes"
-        minSdk = 24
+        minSdk = 22
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -64,6 +63,10 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes = true
+}
+
 dependencies {
 
     // Android
@@ -77,11 +80,15 @@ dependencies {
     implementation("androidx.compose.material3:material3")
 
     // Marvel module
-    //implementation(project(":marvel"))
+    implementation(project(":marvel"))
 
     // Hilt
-    implementation("com.google.dagger:hilt-android:2.49")
-    kapt("com.google.dagger:hilt-compiler:2.49")
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    kapt("com.google.dagger:hilt-compiler:2.51.1")
 
     // Retrofit and Gson
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

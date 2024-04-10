@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Heroes</string>
+    <string name="fetch_marvel_hero">Buscar herói Marvel</string>
+    <string name="find_favorite_hero">Encontre meus heróis favorito</string>
+    <string name="title_activity_favorite">FavoriteActivity</string>
+    <string name="title_activity_search_hero">SearchHeroActivity</string>
 </resources>
