@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -32,7 +33,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dagger.hilt.android.AndroidEntryPoint
+import dev.modena.heroes.shared.Hero
 import dev.modena.heroes.shared.arch.BaseActivity
+import dev.modena.heroes.shared.ui.HeroCard
+import dev.modena.heroes.shared.ui.LoadingDataScreen
 import dev.modena.heroes.shared.ui.NoConnectionScreen
 import dev.modena.heroes.ui.theme.HeroesTheme
 
@@ -46,17 +50,19 @@ class SearchHeroActivity : BaseActivity() {
         setContent {
             HeroesTheme {
                 val hasInternet by _viewModel.hasInternet.collectAsState(true)
+                val isLoading by _viewModel.isLoading.collectAsState(false)
+                val heroes by _viewModel.heroes.collectAsState(listOf())
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
                     SearchScreen(
                         hasInternet = hasInternet,
+                        isLoading = isLoading,
+                        heroes = heroes,
                         checkConnection = { _viewModel.checkConnection() },
                         queryHero = { _viewModel }
-                        )
-
-
+                    )
                 }
             }
         }
@@ -72,6 +78,8 @@ class SearchHeroActivity : BaseActivity() {
 @Composable
 fun SearchScreen(
     hasInternet: Boolean,
+    isLoading: Boolean,
+    heroes: List<Hero>,
     checkConnection: () -> Unit,
     queryHero: (query: String) -> Unit
 ) {
@@ -86,6 +94,10 @@ fun SearchScreen(
                     Log.d("SearchScreen", "Buscando por: $query")
                 }
             )
+            HeroesResultScreen(heroes)
+            if (isLoading) {
+                LoadingDataScreen()
+            }
         }
     } else {
         NoConnectionScreen {
@@ -125,12 +137,23 @@ fun SearchBar(
             .fillMaxWidth()
             .padding(16.dp)
     )
+}
 
+@Composable
+fun HeroesResultScreen(heroes: List<Hero>) {
+    LazyColumn {
+        items(heroes.size) {
+            val hero = heroes[it]
+            HeroCard(hero)
+        }
+    }
 
 }
+
 
 @Preview
 @Composable
 fun SearchScreenPreview() {
-    SearchScreen(false,{}, {})
+    SearchScreen(
+        hasInternet = true, isLoading = true , listOf(), {}, {})
 }

@@ -9,4 +9,5 @@
     <string name="try_again">Tentar de novo</string>
     <string name="empty_result">Resultado vazio</string>
     <string name="hero_not_found">Herói não encontrado.</string>
+    <string name="searching">Buscando...</string>
 </resources>

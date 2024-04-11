@@ -94,9 +94,12 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
-    // INSPECTION OF HTTP(S)
+    // Inspection of http(s)
     debugImplementation("com.github.chuckerteam.chucker:library:4.0.0")
     releaseImplementation("com.github.chuckerteam.chucker:library-no-op:4.0.0")
+
+    // Image load
+    implementation("io.coil-kt:coil-compose:2.6.0")
 
     // Test
     testImplementation("junit:junit:4.13.2")
