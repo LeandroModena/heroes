@@ -23,7 +23,7 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-        buildConfigField("String", "BASE_URL", "\"https://gateway.marvel.com:443/\"")
+        buildConfigField("String", "BASE_URL", "\"https://gateway.marvel.com:443//v1/public/\"")
         val prop = Properties()
         prop.load(project.rootProject.file("local.properties").inputStream())
         buildConfigField("String", "MarvelApiKey", prop.getProperty("MARVEL_API_KEY"))

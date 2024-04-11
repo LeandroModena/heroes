@@ -1,6 +1,6 @@
 package dev.modena.marvel.model
 
-data class ResponseData(
+data class ResponseMarvel(
     val code: Long,
     val status: String,
     val copyright: String,
