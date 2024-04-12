@@ -1,11 +1,12 @@
 package dev.modena.heroes.search
 
 import android.os.Bundle
-import android.util.Log
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,23 +22,27 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dagger.hilt.android.AndroidEntryPoint
-import dev.modena.heroes.shared.Hero
+import dev.modena.heroes.R
+import dev.modena.heroes.data.local.entity.Hero
 import dev.modena.heroes.shared.arch.BaseActivity
+import dev.modena.heroes.shared.model.Page
 import dev.modena.heroes.shared.ui.HeroCard
 import dev.modena.heroes.shared.ui.LoadingDataScreen
 import dev.modena.heroes.shared.ui.NoConnectionScreen
+import dev.modena.heroes.shared.ui.NoResultScreen
 import dev.modena.heroes.ui.theme.HeroesTheme
 
 @AndroidEntryPoint
@@ -52,6 +57,8 @@ class SearchHeroActivity : BaseActivity() {
                 val hasInternet by _viewModel.hasInternet.collectAsState(true)
                 val isLoading by _viewModel.isLoading.collectAsState(false)
                 val heroes by _viewModel.heroes.collectAsState(listOf())
+                val page by _viewModel.page.collectAsState(null)
+
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -60,8 +67,12 @@ class SearchHeroActivity : BaseActivity() {
                         hasInternet = hasInternet,
                         isLoading = isLoading,
                         heroes = heroes,
-                        checkConnection = { _viewModel.checkConnection() },
-                        queryHero = { _viewModel }
+                        checkConnection = { _viewModel.tryAgain() },
+                        page = page,
+                        queryHero = { _viewModel.searchByName(it) },
+                        onClickFavoriteHero = { isFavorite, hero ->
+                            _viewModel.saveOrDeleteFavoriteHero(isFavorite, hero)
+                        }
                     )
                 }
             }
@@ -80,8 +91,10 @@ fun SearchScreen(
     hasInternet: Boolean,
     isLoading: Boolean,
     heroes: List<Hero>,
+    page: Page?,
     checkConnection: () -> Unit,
-    queryHero: (query: String) -> Unit
+    queryHero: (query: String) -> Unit,
+    onClickFavoriteHero: (isFavorite: Boolean, hero: Hero) -> Unit
 ) {
     var query by rememberSaveable { mutableStateOf("") }
 
@@ -91,12 +104,15 @@ fun SearchScreen(
                 query = query,
                 onQueryChanged = { query = it },
                 onSearch = { query ->
-                    Log.d("SearchScreen", "Buscando por: $query")
+                    queryHero.invoke(query)
                 }
             )
-            HeroesResultScreen(heroes)
             if (isLoading) {
                 LoadingDataScreen()
+            } else {
+                page?.let {
+                    HeroesResultScreen(heroes, page, onClickFavoriteHero)
+                } ?: Text(text = "Nenhum dados para apresentar")
             }
         }
     } else {
@@ -140,14 +156,53 @@ fun SearchBar(
 }
 
 @Composable
-fun HeroesResultScreen(heroes: List<Hero>) {
-    LazyColumn {
-        items(heroes.size) {
-            val hero = heroes[it]
-            HeroCard(hero)
-        }
-    }
+fun HeroesResultScreen(
+    heroes: List<Hero>,
+    page: Page,
+    onClickFavoriteHero: (isFavorite: Boolean, hero: Hero) -> Unit
+) {
 
+    if (heroes.isNotEmpty()) {
+        LazyColumn {
+            items(heroes.size) {
+                val hero = heroes[it]
+                HeroCard(hero) {
+                    onClickFavoriteHero.invoke(hero.isFavorite, hero)
+                }
+            }
+            item {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    IconButton(onClick = {
+
+                    }) {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_before),
+                            contentDescription = "remove"
+                        )
+                    }
+                    Text(text = page.getCurrentPage().toString())
+                    Text(text = stringResource(R.string.page_tab))
+                    Text(text = page.total.toString())
+                    IconButton(onClick = {
+
+                    }) {
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_next),
+                            contentDescription = "remove"
+                        )
+                    }
+                }
+            }
+        }
+    } else {
+        NoResultScreen(stringResource(R.string.hero_not_found))
+    }
 }
 
 
@@ -155,5 +210,7 @@ fun HeroesResultScreen(heroes: List<Hero>) {
 @Composable
 fun SearchScreenPreview() {
     SearchScreen(
-        hasInternet = true, isLoading = true , listOf(), {}, {})
+        hasInternet = true, isLoading = false, listOf(), Page(10, 10, 1000, 10), {},{},{
+            isFavorite, hero ->
+        })
 }

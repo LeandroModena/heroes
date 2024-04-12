@@ -1,4 +1,4 @@
-package dev.modena.heroes.data
+package dev.modena.heroes.data.remote
 
 import dev.modena.marvel.service.MarvelService
 import retrofit2.Retrofit
@@ -10,5 +10,6 @@ class RemoteMarvel @Inject constructor(
 
     suspend fun getInitialCharacters() = retrofit.create(MarvelService::class.java).getCharacters()
 
-
+    suspend fun getCharactersByName(query: String) =
+        retrofit.create(MarvelService::class.java).getCharacters(nameStartsWith = query)
 }

@@ -15,7 +15,7 @@ abstract class BaseRepository {
                     val body = response.body()!!
                     emit(Result.success(body))
                 }  else {
-                    emit(Result.failure(Exception()))
+                    emit(Result.failure(Exception("Error request code: ${response.code()}")))
                 }
             } catch (e: Exception) {
                 emit(Result.failure(e))
