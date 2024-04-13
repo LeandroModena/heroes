@@ -10,8 +10,6 @@ data class Page(
 ) {
 
     companion object {
-
-        private const val AMOUNT_HERO = 10
         fun createByMarvel(marvel: ResponseMarvel): Page {
             return Page(
                 offset = marvel.data.offset,

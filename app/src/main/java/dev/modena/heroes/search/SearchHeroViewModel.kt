@@ -14,7 +14,6 @@ import dev.modena.marvel.model.ResponseMarvel
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
-import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.inject.Inject
 
@@ -27,6 +26,8 @@ class SearchHeroViewModel @Inject constructor(
     private val _query = MutableLiveData("")
     private val _hasInternet = MutableLiveData<Boolean>()
     val hasInternet = _hasInternet.asFlow()
+    private val _hasErrors = MutableLiveData<Boolean>()
+    val hasErrors = _hasErrors.asFlow()
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading = _isLoading.asFlow()
     private val _heroes = MutableLiveData<List<Hero>>()
@@ -71,22 +72,26 @@ class SearchHeroViewModel @Inject constructor(
     }
 
     private suspend fun updateScreen(result: Result<ResponseMarvel>) {
-        if (result.isSuccess) {
-            val marvelData = result.getOrNull()
-            marvelData?.let {
-                _page.value = Page.createByMarvel(it)
-                _heroes.value = Hero.createByMarvel(it, repository.getAllIdsHeroesMarvel())
-            }
-        } else {
-            val exception = result.exceptionOrNull()
-            Log.e("TestException", exception?.message, exception)
-            when(exception) {
-                is UnknownHostException -> { _hasInternet.value = false }
-                is SocketTimeoutException -> { }
-                else -> { }
-            }
+        if (result.isSuccess) updateScreenSuccess(result) else updateScreenError(result)
+    }
+
+    private suspend fun updateScreenSuccess(result: Result<ResponseMarvel>) {
+        val marvelData = result.getOrNull()
+        marvelData?.let {
+            _page.value = Page.createByMarvel(it)
+            _heroes.value = Hero.createByMarvel(it, repository.getAllIdsHeroesMarvel())
         }
     }
+
+    private fun updateScreenError(result: Result<ResponseMarvel>) {
+        // Location to handle exception or http request error
+        when(result.exceptionOrNull()) {
+            is UnknownHostException -> { _hasInternet.value = false }
+            //Example for time out handling is SocketTimeoutException -> { }
+            else -> { _hasErrors.value = true }
+        }
+    }
+
 
     fun navigationPage(offset: Long) {
         viewModelScope.launch {
@@ -102,6 +107,7 @@ class SearchHeroViewModel @Inject constructor(
 
     fun tryAgain() {
         _hasInternet.value = hasConnection()
+        _hasErrors.value = false
         if (hasConnection()) {
             _page.value?.let {
                 navigationPage(_page.value?.offset ?: 0)

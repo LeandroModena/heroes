@@ -16,6 +16,9 @@ class RemoteMarvel @Inject constructor(
         retrofit.create(MarvelService::class.java).getCharacters(nameStartsWith = query)
 
     suspend fun navigatePages(offset: Long, query: String) =
-        retrofit.create(MarvelService::class.java).getCharacters(offset = offset, nameStartsWith = query)
+        retrofit.create(MarvelService::class.java).getCharacters(
+            offset = offset,
+            nameStartsWith = query.ifEmpty { null }
+        )
 
 }

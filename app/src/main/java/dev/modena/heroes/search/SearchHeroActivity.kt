@@ -41,7 +41,7 @@ import dev.modena.heroes.shared.arch.BaseActivity
 import dev.modena.heroes.shared.model.Page
 import dev.modena.heroes.shared.ui.HeroCard
 import dev.modena.heroes.shared.ui.LoadingDataScreen
-import dev.modena.heroes.shared.ui.NoConnectionScreen
+import dev.modena.heroes.shared.ui.ErrorScreen
 import dev.modena.heroes.shared.ui.NoResultScreen
 import dev.modena.heroes.ui.theme.HeroesTheme
 
@@ -55,6 +55,7 @@ class SearchHeroActivity : BaseActivity() {
         setContent {
             HeroesTheme {
                 val hasInternet by _viewModel.hasInternet.collectAsState(true)
+                val hasErrors by _viewModel.hasErrors.collectAsState(false)
                 val isLoading by _viewModel.isLoading.collectAsState(false)
                 val heroes by _viewModel.heroes.collectAsState(listOf())
                 val page by _viewModel.page.collectAsState(null)
@@ -65,6 +66,7 @@ class SearchHeroActivity : BaseActivity() {
                 ) {
                     SearchScreen(
                         hasInternet = hasInternet,
+                        hasError = hasErrors,
                         isLoading = isLoading,
                         heroes = heroes,
                         checkConnection = { _viewModel.tryAgain() },
@@ -90,6 +92,7 @@ class SearchHeroActivity : BaseActivity() {
 @Composable
 fun SearchScreen(
     hasInternet: Boolean,
+    hasError: Boolean,
     isLoading: Boolean,
     heroes: List<Hero>,
     page: Page?,
@@ -100,7 +103,7 @@ fun SearchScreen(
 ) {
     var query by rememberSaveable { mutableStateOf("") }
 
-    if (hasInternet) {
+    if (hasInternet && !hasError) {
         Column {
             SearchBar(
                 query = query,
@@ -119,11 +122,11 @@ fun SearchScreen(
                         onClickFavoriteHero,
                         onClickPage,
                     )
-                } ?: Text(text = "Nenhum dados para apresentar")
+                } ?: Text(text = stringResource(R.string.no_data_to_present))
             }
         }
     } else {
-        NoConnectionScreen {
+        ErrorScreen(hasInternet) {
             checkConnection.invoke()
         }
     }
@@ -139,12 +142,12 @@ fun SearchBar(
     TextField(
         value = query,
         onValueChange = onQueryChanged,
-        placeholder = { Text("Buscar...") },
+        placeholder = { Text(stringResource(R.string.searching)) },
         singleLine = true,
         trailingIcon = {
             if (query.isNotEmpty()) {
                 IconButton(onClick = { onQueryChanged("") }) {
-                    Icon(Icons.Filled.Clear, contentDescription = "Limpar")
+                    Icon(Icons.Filled.Clear, contentDescription = stringResource(R.string.clear))
                 }
             }
         },
@@ -225,12 +228,13 @@ fun HeroesResultScreen(
 fun SearchScreenPreview() {
     SearchScreen(
         hasInternet = true,
+        hasError = false,
         isLoading = false,
         listOf(),
         Page(10, 10, 1000, 10),
         {},
         {},
-        { isFavorite, hero ->
+        { _, _ ->
         },
         {})
 }

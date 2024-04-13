@@ -21,7 +21,8 @@ import androidx.compose.ui.unit.dp
 import dev.modena.heroes.R
 
 @Composable
-fun NoConnectionScreen(
+fun ErrorScreen(
+    hasInternet: Boolean,
     tryAgain: () -> Unit
 ) {
     Column(
@@ -34,12 +35,16 @@ fun NoConnectionScreen(
         Icon(
             modifier = Modifier
                 .size(64.dp),
-            painter = painterResource(id = R.drawable.ic_mobiledata_off),
-            contentDescription = stringResource(R.string.no_connection),
+            painter = painterResource(
+                if (hasInternet) R.drawable.ic_negative_smile else R.drawable.ic_mobiledata_off
+            ),
+            contentDescription = stringResource(R.string.image_error),
             tint = if (isSystemInDarkTheme()) Color.White else Color.Black
         )
         Text(
-            text = stringResource(R.string.no_connection_internet),
+            text = stringResource(
+                if (hasInternet) R.string.ops else R.string.no_connection_internet
+            ),
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(top = 16.dp)
         )
@@ -55,7 +60,7 @@ fun NoConnectionScreen(
 @Preview
 @Composable
 fun NoConnectionScreenPreview() {
-    NoConnectionScreen {
+    ErrorScreen(true) {
 
     }
 }
