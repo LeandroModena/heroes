@@ -13,7 +13,7 @@ data class Hero(
     val description: String,
     val thumbnailURL: String,
     @Ignore
-    var isFavorite: Boolean = false
+    var isFavorite: Boolean = true
 ) {
 
     constructor(
@@ -21,7 +21,7 @@ data class Hero(
         name: String,
         description: String,
         thumbnailURL: String,
-    ) : this(id, name, description, thumbnailURL, false)
+    ) : this(id, name, description, thumbnailURL, true)
 
     companion object {
         fun createByMarvel(marvel: ResponseMarvel, ids: List<Long>): List<Hero> {

@@ -15,4 +15,5 @@
     <string name="image_error">Imagem erro</string>
     <string name="clear">Limpar</string>
     <string name="no_data_to_present">Nenhum dados para apresentar</string>
+    <string name="no_favorite_heroes">Nenhum herói favoritado.</string>
 </resources>

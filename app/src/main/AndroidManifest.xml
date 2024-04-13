@@ -18,12 +18,12 @@
         android:theme="@style/Theme.Heroes"
         tools:targetApi="31">
         <activity
-            android:name=".search.SearchHeroActivity"
+            android:name=".home.search.SearchHeroActivity"
             android:exported="false"
             android:label="@string/title_activity_search_hero"
             android:theme="@style/Theme.Heroes" />
         <activity
-            android:name=".favorite.FavoriteHeroActivity"
+            android:name=".home.favorite.FavoriteHeroActivity"
             android:exported="false"
             android:label="@string/title_activity_favorite"
             android:theme="@style/Theme.Heroes" />

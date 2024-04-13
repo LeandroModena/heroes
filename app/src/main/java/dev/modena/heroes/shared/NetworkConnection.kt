@@ -38,5 +38,4 @@ class NetworkConnection @Inject constructor(
         return result
     }
 
-
 }

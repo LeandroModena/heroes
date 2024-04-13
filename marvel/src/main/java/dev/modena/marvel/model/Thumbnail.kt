@@ -9,5 +9,4 @@ data class Thumbnail(
         return "$path.$extension"
     }
 
-
 }

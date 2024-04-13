@@ -19,4 +19,10 @@ interface HeroDao {
     @Query("SELECT id FROM Hero")
     suspend fun getAllHeroIds(): List<Long>
 
+    @Query("SELECT * FROM Hero ORDER BY name ASC LIMIT 10")
+    suspend fun getHeroesSortedByName(): List<Hero>
+
+    @Query("SELECT * FROM Hero ORDER BY name ASC LIMIT 10 OFFSET :offset")
+    suspend fun getHeroesByPage(offset: Int): List<Hero>
+
 }

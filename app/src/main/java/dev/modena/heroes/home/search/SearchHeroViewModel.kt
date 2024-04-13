@@ -1,4 +1,4 @@
-package dev.modena.heroes.search
+package dev.modena.heroes.home.search
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -87,7 +87,7 @@ class SearchHeroViewModel @Inject constructor(
         // Location to handle exception or http request error
         when(result.exceptionOrNull()) {
             is UnknownHostException -> { _hasInternet.value = false }
-            //Example for time out handling is SocketTimeoutException -> { }
+            //Example for time out handling: is SocketTimeoutException -> { }
             else -> { _hasErrors.value = true }
         }
     }

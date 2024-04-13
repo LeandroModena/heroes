@@ -24,8 +24,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dagger.hilt.android.AndroidEntryPoint
 import dev.modena.heroes.R
-import dev.modena.heroes.favorite.FavoriteHeroActivity
-import dev.modena.heroes.search.SearchHeroActivity
+import dev.modena.heroes.home.favorite.FavoriteHeroActivity
+import dev.modena.heroes.home.search.SearchHeroActivity
 import dev.modena.heroes.ui.theme.HeroesTheme
 
 @AndroidEntryPoint
