@@ -16,4 +16,5 @@
     <string name="clear">Limpar</string>
     <string name="no_data_to_present">Nenhum dados para apresentar</string>
     <string name="no_favorite_heroes">Nenhum herói favoritado.</string>
+    <string name="title_activity_detail_hero">DetailHeroActivity</string>
 </resources>

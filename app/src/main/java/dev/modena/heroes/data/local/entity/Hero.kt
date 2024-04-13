@@ -1,10 +1,13 @@
 package dev.modena.heroes.data.local.entity
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import dev.modena.marvel.model.ResponseMarvel
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity
 data class Hero(
     @PrimaryKey
@@ -14,7 +17,7 @@ data class Hero(
     val thumbnailURL: String,
     @Ignore
     var isFavorite: Boolean = true
-) {
+) : Parcelable {
 
     constructor(
         id: Long,
