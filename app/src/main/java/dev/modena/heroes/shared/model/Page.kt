@@ -27,12 +27,19 @@ data class Page(
     }
 
     fun nextPage(): Long {
-        return offset + AMOUNT_HERO
+        return offset + limit
     }
 
     fun backPage(): Long {
-        return offset - AMOUNT_HERO
+        return Math.max(0, offset - limit)
     }
 
+    fun isEnableNextPage(): Boolean {
+        return offset + limit < total
+    }
+
+    fun isEnableBackPage(): Boolean {
+        return offset > 0
+    }
 
 }

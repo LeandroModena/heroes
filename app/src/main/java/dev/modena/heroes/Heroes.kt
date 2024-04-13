@@ -4,9 +4,7 @@ import android.app.Application
 import coil.ImageLoader
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
-import coil.util.CoilUtils
 import dagger.hilt.android.HiltAndroidApp
-import okhttp3.OkHttpClient
 
 
 @HiltAndroidApp

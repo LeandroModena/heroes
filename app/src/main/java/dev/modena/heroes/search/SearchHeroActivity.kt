@@ -72,7 +72,8 @@ class SearchHeroActivity : BaseActivity() {
                         queryHero = { _viewModel.searchByName(it) },
                         onClickFavoriteHero = { isFavorite, hero ->
                             _viewModel.saveOrDeleteFavoriteHero(isFavorite, hero)
-                        }
+                        },
+                        onClickPage = { _viewModel.navigationPage(it) }
                     )
                 }
             }
@@ -94,7 +95,8 @@ fun SearchScreen(
     page: Page?,
     checkConnection: () -> Unit,
     queryHero: (query: String) -> Unit,
-    onClickFavoriteHero: (isFavorite: Boolean, hero: Hero) -> Unit
+    onClickFavoriteHero: (isFavorite: Boolean, hero: Hero) -> Unit,
+    onClickPage: (offset: Long) -> Unit,
 ) {
     var query by rememberSaveable { mutableStateOf("") }
 
@@ -111,7 +113,12 @@ fun SearchScreen(
                 LoadingDataScreen()
             } else {
                 page?.let {
-                    HeroesResultScreen(heroes, page, onClickFavoriteHero)
+                    HeroesResultScreen(
+                        heroes,
+                        page,
+                        onClickFavoriteHero,
+                        onClickPage,
+                    )
                 } ?: Text(text = "Nenhum dados para apresentar")
             }
         }
@@ -159,7 +166,8 @@ fun SearchBar(
 fun HeroesResultScreen(
     heroes: List<Hero>,
     page: Page,
-    onClickFavoriteHero: (isFavorite: Boolean, hero: Hero) -> Unit
+    onClickFavoriteHero: (isFavorite: Boolean, hero: Hero) -> Unit,
+    onClickPage: (offset: Long) -> Unit,
 ) {
 
     if (heroes.isNotEmpty()) {
@@ -178,20 +186,26 @@ fun HeroesResultScreen(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
-                    IconButton(onClick = {
-
-                    }) {
+                    IconButton(
+                        onClick = {
+                            onClickPage.invoke(page.backPage())
+                        },
+                        enabled = page.isEnableBackPage()
+                    ) {
                         Image(
-                            painter = painterResource(id = R.drawable.ic_before),
+                            painter = painterResource(id = R.drawable.ic_back),
                             contentDescription = "remove"
                         )
                     }
                     Text(text = page.getCurrentPage().toString())
                     Text(text = stringResource(R.string.page_tab))
                     Text(text = page.total.toString())
-                    IconButton(onClick = {
-
-                    }) {
+                    IconButton(
+                        onClick = {
+                            onClickPage.invoke(page.nextPage())
+                        },
+                        enabled = page.isEnableNextPage()
+                    ) {
                         Image(
                             painter = painterResource(id = R.drawable.ic_next),
                             contentDescription = "remove"
@@ -210,7 +224,13 @@ fun HeroesResultScreen(
 @Composable
 fun SearchScreenPreview() {
     SearchScreen(
-        hasInternet = true, isLoading = false, listOf(), Page(10, 10, 1000, 10), {},{},{
-            isFavorite, hero ->
-        })
+        hasInternet = true,
+        isLoading = false,
+        listOf(),
+        Page(10, 10, 1000, 10),
+        {},
+        {},
+        { isFavorite, hero ->
+        },
+        {})
 }

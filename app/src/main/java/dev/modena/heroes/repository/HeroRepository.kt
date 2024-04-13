@@ -21,6 +21,10 @@ class HeroRepository @Inject constructor(
         return requestByFlow { remoteMarvel.getCharactersByName(query) }
     }
 
+    suspend fun navigatePage(offset: Long, query: String): Flow<Result<ResponseMarvel>> {
+        return requestByFlow { remoteMarvel.navigatePages(offset, query) }
+    }
+
     suspend fun getAllIdsHeroesMarvel(): List<Long> {
         return heroDao.getAllHeroIds()
     }

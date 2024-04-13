@@ -14,6 +14,7 @@ import dev.modena.marvel.model.ResponseMarvel
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 import javax.inject.Inject
 
@@ -32,7 +33,6 @@ class SearchHeroViewModel @Inject constructor(
     val heroes = _heroes.asFlow()
     private val _page = MutableLiveData<Page>()
     val page = _page.asFlow()
-    private val _allIdsFavoritesHero = MutableLiveData<List<Long>>()
 
     fun initialize() {
         _hasInternet.value = hasConnection()
@@ -82,8 +82,38 @@ class SearchHeroViewModel @Inject constructor(
             Log.e("TestException", exception?.message, exception)
             when(exception) {
                 is UnknownHostException -> { _hasInternet.value = false }
+                is SocketTimeoutException -> { }
                 else -> { }
             }
+        }
+    }
+
+    fun navigationPage(offset: Long) {
+        viewModelScope.launch {
+            repository.navigatePage(offset, _query.value!!)
+                .onStart { showLoading() }
+                .onCompletion { hideLoading() }
+                .collect { result ->
+                    updateScreen(result)
+            }
+        }
+    }
+
+
+    fun tryAgain() {
+        _hasInternet.value = hasConnection()
+        if (hasConnection()) {
+            _page.value?.let {
+                navigationPage(_page.value?.offset ?: 0)
+            } ?: run {
+                searchByName(_query.value ?: "")
+            }
+        }
+    }
+
+    fun saveOrDeleteFavoriteHero(isFavorite: Boolean, hero: Hero) {
+        viewModelScope.launch {
+            repository.saveOrDeleteHeroesMarvel(isFavorite, hero)
         }
     }
 
@@ -93,19 +123,6 @@ class SearchHeroViewModel @Inject constructor(
 
     private fun hideLoading() {
         _isLoading.value = false
-    }
-
-    fun tryAgain() {
-        _hasInternet.value = hasConnection()
-        if (hasConnection()) {
-            searchByName(_query.value ?: "")
-        }
-    }
-
-    fun saveOrDeleteFavoriteHero(isFavorite: Boolean, hero: Hero) {
-        viewModelScope.launch {
-            repository.saveOrDeleteHeroesMarvel(isFavorite, hero)
-        }
     }
 
 }

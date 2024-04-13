@@ -10,8 +10,8 @@ interface MarvelService {
     @GET("characters")
     suspend fun getCharacters(
         @Query("nameStartsWith") nameStartsWith: String? = null,
-        @Query("limit") limit: Int = 10,
-        @Query("offset") offset: Int? = null
+        @Query("limit") limit: Long = 10L,
+        @Query("offset") offset: Long? = null
     ): Response<ResponseMarvel>
 
 }
