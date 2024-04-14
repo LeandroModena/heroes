@@ -3,6 +3,7 @@ package dev.modena.heroes.home.detail
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -26,7 +27,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -35,6 +35,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,6 +52,7 @@ import kotlinx.coroutines.launch
 class DetailHeroActivity : BaseActivity() {
 
     private lateinit var hero: Hero
+    private val _viewModel: DetailHeroViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +67,8 @@ class DetailHeroActivity : BaseActivity() {
                         action = { onBackPressedDispatcher.onBackPressed() }) {
                         DetailHeroScreen(
                             hero = hero,
-                            onFavoriteClick = { }
+                            onClickFavorite = { },
+                            onClickShare = { _viewModel.onClickShareHero() }
                         )
                     }
                 }
@@ -75,17 +78,31 @@ class DetailHeroActivity : BaseActivity() {
 
     override fun init() {
         hero = intent.parcelable<Hero>(Hero::class.java.simpleName)!!
+        observeOnClickShare()
+    }
+
+    private fun observeOnClickShare() {
+        _viewModel.share.observe(this) {
+            lifecycleScope.launch {
+                ShareImage.async(this@DetailHeroActivity, hero, getString(R.string.share)) {
+                    Toast.makeText(
+                        this@DetailHeroActivity,
+                        getString(R.string.unable_to_share_image),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
     }
 }
 
 @Composable
 fun DetailHeroScreen(
     hero: Hero,
-    onFavoriteClick: (isFavorite: Boolean) -> Unit
+    onClickFavorite: (isFavorite: Boolean) -> Unit,
+    onClickShare: () -> Unit
 ) {
     var isFavorite by rememberSaveable { mutableStateOf(hero.isFavorite) }
-    val context = LocalContext.current
-    val scope = rememberCoroutineScope()
     val scrollState = rememberScrollState()
 
     Card(
@@ -125,17 +142,7 @@ fun DetailHeroScreen(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
-                    onClick = {
-                        scope.launch {
-                            ShareImage.async(context, hero, context.getString(R.string.share)) {
-                                Toast.makeText(
-                                    context,
-                                    context.getString(R.string.unable_to_share_image),
-                                    Toast.LENGTH_LONG
-                                ).show()
-                            }
-                        }
-                    }
+                    onClick = { onClickShare.invoke() }
                 ) {
                     Text(text = stringResource(R.string.share))
                 }
@@ -143,7 +150,7 @@ fun DetailHeroScreen(
             IconButton(
                 onClick = {
                     isFavorite = !isFavorite
-                    onFavoriteClick.invoke(hero.isFavorite)
+                    onClickFavorite.invoke(hero.isFavorite)
                 },
                 modifier = Modifier
                     .align(Alignment.TopEnd)
