@@ -43,6 +43,12 @@ android {
             )
         }
     }
+
+    testOptions {
+        unitTests.isIncludeAndroidResources  = true
+        unitTests.isReturnDefaultValues = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -100,12 +106,16 @@ dependencies {
     //noinspection KaptUsageInsteadOfKsp
     kapt("androidx.room:room-compiler:$roomVersion")
 
-    // Test
+    // Test and Debug
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+    testImplementation("org.mockito:mockito-core:4.0.0")
+    testImplementation ("org.mockito:mockito-inline:3.7.0")
+    androidTestImplementation ("org.mockito:mockito-android:2.12.0")
 }

@@ -2,7 +2,6 @@ package dev.modena.heroes.home
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Arrangement
@@ -29,10 +28,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.modena.heroes.R
 import dev.modena.heroes.home.favorite.FavoriteHeroActivity
 import dev.modena.heroes.home.search.SearchHeroActivity
+import dev.modena.heroes.shared.arch.BaseActivity
 import dev.modena.heroes.ui.theme.HeroesTheme
 
 @AndroidEntryPoint
-class HomeActivity : ComponentActivity() {
+class HomeActivity : BaseActivity() {
 
     private val _viewModel: HomeViewModel by viewModels()
 
@@ -50,12 +50,25 @@ class HomeActivity : ComponentActivity() {
                     ) {
                         Column(modifier = Modifier.padding(it)) {
                             MainScreen(
-                                onClickSearch = { showSearchHero() },
-                                onClickFavorite = { showFavoriteHero() }
+                                onClickSearch = { _viewModel.onClickSearch() },
+                                onClickFavorite = { _viewModel.onClickFavorite() }
                             )
                         }
                     }
                 }
+            }
+        }
+    }
+
+    override fun init() {
+        observeOnClickRoute()
+    }
+
+    private fun observeOnClickRoute() {
+        _viewModel.route.observe(this) {
+            when(it) {
+                is HomeRoute.Favorite -> showFavoriteHero()
+                is HomeRoute.Search -> showSearchHero()
             }
         }
     }

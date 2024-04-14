@@ -46,8 +46,12 @@ class SearchHeroViewModel @Inject constructor(
     private fun initialRequest() {
         viewModelScope.launch {
             repository.getCharactersMarvel()
-                .onStart { showLoading() }
-                .onCompletion { hideLoading() }
+                .onStart {
+                    showLoading()
+                }
+                .onCompletion {
+                    hideLoading()
+                }
                 .collect { result ->
                     updateScreen(result)
                 }
