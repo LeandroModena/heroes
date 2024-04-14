@@ -4,11 +4,11 @@
 
 Este aplicativo apresenta uma extensa lista de personagens de heróis, com a capacidade de marcar favoritos, ver detalhes ampliados e acessar informações offline. 
 Inicialmente conectado a Api da Marvel porem extensível para outras Api (DC, Naruto, DB) devido a sua modularização.
-O projeto segue o padrão de arquitetura MVVM, assegurando um código organizado.
+O projeto segue o padrão de arquitetura MVVM e Compose, assegurando um código organizado e reutilizáveis.
 
 ## Funcionalidades
 
-- **Exploração de Personagens**: Uma lista rolável dos personagens da Marvel.
+- **Exploração de Personagens**: Uma lista rolável dos personagens da Marvel paginada.
 - **Favoritos**: Capacidade de favoritar personagens na lista e na visualização de detalhes.
 - **Acesso Offline**: Os personagens favoritados são salvos no dispositivo para acesso offline.
 - **Pesquisa**: Barra de pesquisa para filtrar personagens por nome.
