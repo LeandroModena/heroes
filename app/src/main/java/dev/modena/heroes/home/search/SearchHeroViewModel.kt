@@ -1,13 +1,12 @@
 package dev.modena.heroes.home.search
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.modena.heroes.repository.HeroRepository
 import dev.modena.heroes.data.local.entity.Hero
+import dev.modena.heroes.repository.HeroRepository
 import dev.modena.heroes.shared.NetworkConnection
 import dev.modena.heroes.shared.model.Page
 import dev.modena.marvel.model.ResponseMarvel

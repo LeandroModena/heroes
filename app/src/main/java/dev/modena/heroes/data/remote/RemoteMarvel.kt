@@ -1,6 +1,5 @@
 package dev.modena.heroes.data.remote
 
-import dev.modena.heroes.shared.model.Page
 import dev.modena.marvel.service.MarvelService
 import retrofit2.Retrofit
 import javax.inject.Inject

@@ -11,7 +11,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -34,9 +33,9 @@ import dev.modena.heroes.R
 import dev.modena.heroes.data.local.entity.Hero
 import dev.modena.heroes.shared.arch.BaseActivity
 import dev.modena.heroes.shared.model.Page
-import dev.modena.heroes.shared.ui.LoadingDataScreen
 import dev.modena.heroes.shared.ui.ErrorScreen
 import dev.modena.heroes.shared.ui.HeroesResultScreen
+import dev.modena.heroes.shared.ui.LoadingDataScreen
 import dev.modena.heroes.shared.ui.ScreenWithTopBar
 import dev.modena.heroes.ui.theme.HeroesTheme
 
