@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 fun ScreenWithTopBar(
     title: String,
     action: () -> Unit,
-    isNavigationIcon: Boolean = true,
     content: @Composable () -> Unit
 ) {
     Scaffold(
