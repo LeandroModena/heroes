@@ -84,17 +84,7 @@ dependencies {
 
     // Hilt
     implementation("com.google.dagger:hilt-android:2.51.1")
-    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
-    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
-    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
     kapt("com.google.dagger:hilt-compiler:2.51.1")
-
-    // Retrofit and Gson
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     // Inspection of http(s)
     debugImplementation("com.github.chuckerteam.chucker:library:4.0.0")
