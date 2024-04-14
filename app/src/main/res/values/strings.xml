@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Heroes</string>
     <string name="fetch_marvel_hero">Buscar herói Marvel</string>
-    <string name="find_favorite_hero">Encontre meus heróis favorito</string>
+    <string name="my_favorite_hero">Meus heróis favorito</string>
     <string name="title_activity_favorite">FavoriteActivity</string>
     <string name="title_activity_search_hero">SearchHeroActivity</string>
     <string name="no_connection">Sem conexão</string>
@@ -9,12 +9,19 @@
     <string name="try_again">Tentar de novo</string>
     <string name="empty_result">Resultado vazio</string>
     <string name="hero_not_found">Herói não encontrado.</string>
-    <string name="searching">Buscando...</string>
+    <string name="searching">Buscando…</string>
     <string name="page_tab">" / "</string>
-    <string name="ops">Ops... Algo deu errado.</string>
+    <string name="ops">Ops… Algo deu errado.</string>
     <string name="image_error">Imagem erro</string>
     <string name="clear">Limpar</string>
     <string name="no_data_to_present">Nenhum dados para apresentar</string>
     <string name="no_favorite_heroes">Nenhum herói favoritado.</string>
     <string name="title_activity_detail_hero">DetailHeroActivity</string>
+    <string name="search">Pesquisar</string>
+    <string name="favorites">Favoritos</string>
+    <string name="without_description">Sem descrição.</string>
+    <string name="share">Compartilhar</string>
+    <string name="unable_to_share_image">Não foi possivel compartilhar a imagem</string>
+    <string name="details">Detalhes</string>
+    <string name="home">Home</string>
 </resources>

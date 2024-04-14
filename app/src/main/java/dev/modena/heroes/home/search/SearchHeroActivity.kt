@@ -11,6 +11,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -36,6 +37,7 @@ import dev.modena.heroes.shared.model.Page
 import dev.modena.heroes.shared.ui.LoadingDataScreen
 import dev.modena.heroes.shared.ui.ErrorScreen
 import dev.modena.heroes.shared.ui.HeroesResultScreen
+import dev.modena.heroes.shared.ui.ScreenWithTopBar
 import dev.modena.heroes.ui.theme.HeroesTheme
 
 @AndroidEntryPoint
@@ -57,19 +59,23 @@ class SearchHeroActivity : BaseActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    SearchScreen(
-                        hasInternet = hasInternet,
-                        hasError = hasErrors,
-                        isLoading = isLoading,
-                        heroes = heroes,
-                        checkConnection = { _viewModel.tryAgain() },
-                        page = page,
-                        queryHero = { _viewModel.searchByName(it) },
-                        onClickFavoriteHero = { isFavorite, hero ->
-                            _viewModel.saveOrDeleteFavoriteHero(isFavorite, hero)
-                        },
-                        onClickPage = { _viewModel.navigationPage(it) }
-                    )
+                    ScreenWithTopBar(
+                        title = getString(R.string.search),
+                        action = { onBackPressedDispatcher.onBackPressed() }) {
+                        SearchScreen(
+                            hasInternet = hasInternet,
+                            hasError = hasErrors,
+                            isLoading = isLoading,
+                            heroes = heroes,
+                            checkConnection = { _viewModel.tryAgain() },
+                            page = page,
+                            queryHero = { _viewModel.searchByName(it) },
+                            onClickFavoriteHero = { isFavorite, hero ->
+                                _viewModel.saveOrDeleteFavoriteHero(isFavorite, hero)
+                            },
+                            onClickPage = { _viewModel.navigationPage(it) }
+                        )
+                    }
                 }
             }
         }
@@ -132,7 +138,7 @@ fun SearchBar(
     TextField(
         value = query,
         onValueChange = onQueryChanged,
-        placeholder = { Text(stringResource(R.string.searching)) },
+        placeholder = { Text("Nome") },
         singleLine = true,
         trailingIcon = {
             if (query.isNotEmpty()) {

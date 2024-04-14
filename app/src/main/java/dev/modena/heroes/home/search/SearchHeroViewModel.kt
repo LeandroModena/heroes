@@ -120,6 +120,15 @@ class SearchHeroViewModel @Inject constructor(
     fun saveOrDeleteFavoriteHero(isFavorite: Boolean, hero: Hero) {
         viewModelScope.launch {
             repository.saveOrDeleteHeroesMarvel(isFavorite, hero)
+            val updatedList = _heroes.value?.map { currentHero ->
+                if (currentHero.id == hero.id) {
+                    currentHero.copy(isFavorite = !isFavorite)
+                } else {
+                    currentHero
+                }
+            }
+            _heroes.value = updatedList!!
+
         }
     }
 

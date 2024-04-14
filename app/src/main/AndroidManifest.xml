@@ -21,7 +21,8 @@
             android:name=".home.detail.DetailHeroActivity"
             android:exported="false"
             android:label="@string/title_activity_detail_hero"
-            android:theme="@style/Theme.Heroes" />
+            android:theme="@style/Theme.Heroes"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".home.search.SearchHeroActivity"
             android:exported="false"

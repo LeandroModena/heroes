@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -37,7 +38,7 @@ import dev.modena.heroes.shared.util.showDetailHero
 
 @Composable
 fun HeroCard(hero: Hero, onFavoriteClick: (isFavorite: Boolean) -> Unit) {
-    var isFavorite by rememberSaveable { mutableStateOf(hero.isFavorite) }
+    var isFavorite by remember { mutableStateOf(hero.isFavorite) }
     val context = LocalContext.current
 
     Card(
