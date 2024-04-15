@@ -33,10 +33,10 @@ import dev.modena.heroes.R
 import dev.modena.heroes.data.local.entity.Hero
 import dev.modena.heroes.shared.arch.BaseActivity
 import dev.modena.heroes.shared.model.Page
-import dev.modena.heroes.shared.ui.ErrorScreen
-import dev.modena.heroes.shared.ui.HeroesResultScreen
-import dev.modena.heroes.shared.ui.LoadingDataScreen
-import dev.modena.heroes.shared.ui.ScreenWithTopBar
+import dev.modena.heroes.ui.theme.ErrorScreen
+import dev.modena.heroes.ui.theme.HeroesResultScreen
+import dev.modena.heroes.ui.theme.LoadingDataScreen
+import dev.modena.heroes.ui.theme.ScreenWithTopBar
 import dev.modena.heroes.ui.theme.HeroesTheme
 
 @AndroidEntryPoint

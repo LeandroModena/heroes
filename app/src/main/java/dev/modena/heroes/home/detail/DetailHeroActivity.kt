@@ -32,7 +32,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import dev.modena.heroes.R
 import dev.modena.heroes.data.local.entity.Hero
 import dev.modena.heroes.shared.arch.BaseActivity
-import dev.modena.heroes.shared.ui.ScreenWithTopBar
+import dev.modena.heroes.ui.theme.ScreenWithTopBar
 import dev.modena.heroes.shared.util.ShareImage
 import dev.modena.heroes.shared.util.parcelable
 import dev.modena.heroes.ui.theme.HeroesTheme

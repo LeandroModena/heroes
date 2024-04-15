@@ -1,4 +1,4 @@
-package dev.modena.heroes.shared.ui
+package dev.modena.heroes.ui.theme
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
