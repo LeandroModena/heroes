@@ -20,10 +20,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -94,7 +90,6 @@ fun DetailHeroScreen(
     hero: Hero,
     onClickShare: () -> Unit
 ) {
-    var isFavorite by rememberSaveable { mutableStateOf(hero.isFavorite) }
     val scrollState = rememberScrollState()
 
     Card(

@@ -7,6 +7,4 @@ package dev.modena.marvel
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
-class ExampleUnitTest {
-
-}
+class ExampleUnitTest
