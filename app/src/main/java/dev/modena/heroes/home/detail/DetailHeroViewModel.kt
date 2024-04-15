@@ -17,7 +17,6 @@ class DetailHeroViewModel @Inject constructor(): ViewModel() {
         _share.value = Share.Image
     }
 
-
 }
 
 sealed class Share {
