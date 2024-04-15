@@ -51,8 +51,8 @@ Este aplicativo foi construido com:
 
 Algumas considerações:
 
-Para realizar uma request com flow no repositório utilize a função `requestByFlow { }` ela irá retornar um flow com a [classe `Result` do kotlin](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-result/)
-Toda atividade desse projeto herda `BaseActivity` para inicialização.
+- Para realizar uma request com flow no repositório utilize a função `requestByFlow { }` ela irá retornar um flow com a [classe `Result` do kotlin](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-result/)
+- Toda atividade desse projeto herda `BaseActivity` para inicialização.
 
 
 
