@@ -52,7 +52,7 @@ This app was build with:
 Some considerations:
 
 - There are 23 unit tests that can be easily run from Android Studio or from the root of the project by running `./gradlew :app:test`
-- To make a request with flow in the repository use the function `requestByFlow { }` it will return a flow with [kotlin's `Result` class](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin /-result/)
+- To make a request with flow in the repository use the function `requestByFlow { }` it will return a flow with kotlin [`Result` class](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-result/)
 - Every Activity in this project inherits `BaseActivity` for initialization.
 
 
