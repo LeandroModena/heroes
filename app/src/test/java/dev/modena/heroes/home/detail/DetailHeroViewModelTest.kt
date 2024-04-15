@@ -2,10 +2,7 @@ package dev.modena.heroes.home.detail
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import dev.modena.heroes.extensions.getOrAwaitValue
-import dev.modena.heroes.home.HomeRoute
-import dev.modena.heroes.home.HomeViewModel
 import dev.modena.heroes.repository.HeroRepository
-import junit.framework.TestCase
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

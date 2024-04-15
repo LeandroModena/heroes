@@ -2,10 +2,7 @@ package dev.modena.heroes.home.favorite
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import dev.modena.heroes.data.local.entity.Hero
-import dev.modena.heroes.home.HomeViewModel
 import dev.modena.heroes.repository.HeroRepository
-import dev.modena.marvel.model.ResponseMarvel
-import junit.framework.TestCase
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse
 import junit.framework.TestCase.assertTrue
@@ -22,7 +19,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
