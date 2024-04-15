@@ -42,12 +42,12 @@ A interface é dividida em três seções principais:
 
 Este aplicativo foi construido com:
 
-**[Jetpack Compose](https://developer.android.com/develop/ui/compose)** para criação de layout.
-**[Room](https://developer.android.com/training/data-storage/room)** para salvar dados.
-**[Hilt](https://developer.android.com/training/dependency-injection/hilt-android)** para injeção de dependência.
-**[Retrofit](https://square.github.io/retrofit/)** para requisições http.
-**[Coroutines](https://developer.android.com/kotlin/coroutines)** para serviços assíncrono.
-**[Flow](https://developer.android.com/kotlin/flow)** e **[LiveData](https://developer.android.com/topic/libraries/architecture/livedata)** para controle de estado.
+- **[Jetpack Compose](https://developer.android.com/develop/ui/compose)** para criação de layout.
+- **[Room](https://developer.android.com/training/data-storage/room)** para salvar dados.
+- **[Hilt](https://developer.android.com/training/dependency-injection/hilt-android)** para injeção de dependência.
+- **[Retrofit](https://square.github.io/retrofit/)** para requisições http.
+- **[Coroutines](https://developer.android.com/kotlin/coroutines)** para serviços assíncrono.
+- **[Flow](https://developer.android.com/kotlin/flow)** e **[LiveData](https://developer.android.com/topic/libraries/architecture/livedata)** para controle de estado.
 
 Algumas considerações:
 
