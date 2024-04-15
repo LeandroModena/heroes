@@ -1,59 +1,59 @@
 # App Heroes
 
-## Visão Geral
+## Overview
 
-Este aplicativo apresenta uma extensa lista de personagens de heróis, com a capacidade de marcar favoritos, ver detalhes ampliados e acessar informações offline. 
-Inicialmente conectado a Api da Marvel porem extensível para outras Api (DC, Naruto, DB) devido a sua modularização.
-O projeto segue o padrão de arquitetura MVVM e Compose, assegurando um código organizado e reutilizáveis.
+This app features an extensive list of hero characters, with the ability to bookmark favorites, view expanded details, and access information offline.
+Initially connected to Marvel's Api but extensible to other Api (DC, Naruto, DB) due to its modularization.
+The project follows the MVVM and Compose architecture pattern, ensuring organized and reusable code.
 
-## Funcionalidades
+## Functionalities
 
-- **Exploração de Personagens**: Uma lista rolável dos personagens da Marvel paginada.
-- **Favoritos**: Capacidade de favoritar personagens na lista e na visualização de detalhes.
-- **Acesso Offline**: Os personagens favoritados são salvos no dispositivo para acesso offline.
-- **Pesquisa**: Barra de pesquisa para filtrar personagens por nome.
-- **Visualização de Detalhes**: Página detalhada para cada personagem com imagem maior e descrição.
-- **Tratamento de Erros**: Interfaces para listas vazias, erros e cenários de falta de internet.
+- **Character Exploration**: A scrollable list of Marvel characters paginated.
+- **Favorites**: Ability to favorite characters in the list and in the details view.
+- **Offline Access**: Favorite characters are saved on the device for offline access.
+- **Search**: Search bar to filter characters by name.
+- **Detail View**: Detailed page for each character with larger image and description.
+- **Error Handling**: Interfaces for empty lists, errors and internet outage scenarios.
 
 ## API
 
-O aplicativo usa o endpoint "Characters" da API da Marvel para obter dados dos personagens. Mais informações podem ser encontradas na [documentação oficial da Marvel](https://developer.marvel.com/docs).
+The app uses the Marvel API "Characters" endpoint to get character data. More information can be found in [official Marvel documentation](https://developer.marvel.com/docs).
 
-## Interface do Usuário
+## User Interface
 
-A interface é dividida em três seções principais:
+The interface is divided into three main sections:
 
-1. **Pesquisa - Personagens**: Lista de personagens com opções para favoritar e uma barra de pesquisa.
-2. **Detalhes do Personagem**: Visualização detalhada com opções de compartilhamento da imagem.
-3. **Favoritos**: Lista dos personagens favoritados e botão para remover favoritos.
+1. **Search - Characters**: List of characters with options to favorite them and a search bar.
+2. **Character Details**: Detailed view with image sharing options.
+3. **Favorites**: List of favorite characters and button to remove favorites.
 
 
-## Execução do Projeto
+## Project Execution
 
-1. Clone o repositório para sua máquina local.
-2. Abra o projeto no Android Studio ou na IDE de sua preferência.
-3. Crie sua api key em https://developer.marvel.com/account
-4. Salve sua api privada com o nome MARVEL_API_KEY em local.properties.
-5. Salve sua api publica com o nome MARVEL_PUB_API_KEY em local.properties.
-6. Sincronize o projeto com os arquivos do Gradle pelo Android Studio ou utilize o terminal com `./gradlew build --refresh-dependencies` e depois .`/gradlew assembleDebug`.
-7. Execute a aplicação em um emulador ou dispositivo físico.
+1. Clone the repository to your local machine.
+2. Open the project in Android Studio or your preferred IDE.
+3. Create your api key at https://developer.marvel.com/account
+4. Save your private api with the name MARVEL_API_KEY in local.properties.
+5. Save your public api with the name MARVEL_PUB_API_KEY in local.properties.
+6. Synchronize the project with the Gradle files through Android Studio or use the terminal with `./gradlew build --refresh-dependencies` and then .`/gradlew assembleDebug`.
+7. Run the application on an emulator or physical device.
 
-## Documentação e Decisões de Projeto
+## Documentation and Design Decisions
 
-Este aplicativo foi construido com:
+This app was build with:
 
-- **[Jetpack Compose](https://developer.android.com/develop/ui/compose)** para criação de layout.
-- **[Room](https://developer.android.com/training/data-storage/room)** para salvar dados.
-- **[Hilt](https://developer.android.com/training/dependency-injection/hilt-android)** para injeção de dependência.
-- **[Retrofit](https://square.github.io/retrofit/)** para requisições http.
-- **[Coroutines](https://developer.android.com/kotlin/coroutines)** para serviços assíncrono.
-- **[Flow](https://developer.android.com/kotlin/flow)** e **[LiveData](https://developer.android.com/topic/libraries/architecture/livedata)** para controle de estado.
+- **[Jetpack Compose](https://developer.android.com/develop/ui/compose)** for layout creation.
+- **[Room](https://developer.android.com/training/data-storage/room)** to save data.
+- **[Hilt](https://developer.android.com/training/dependency-injection/hilt-android)** for dependency injection.
+- **[Retrofit](https://square.github.io/retrofit/)** for http requests.
+- **[Coroutines](https://developer.android.com/kotlin/coroutines)** for asynchronous services.
+- **[Flow](https://developer.android.com/kotlin/flow)** and **[LiveData](https://developer.android.com/topic/libraries/architecture/livedata)** for state control.
 
-Algumas considerações:
+Some considerations:
 
-- Existe 23 testes unitários que podem ser facilmente rodado pelo Android Studio ou pelo terminar na raiz do projeto executando `./gradlew :app:test`
-- Para realizar uma request com flow no repositório utilize a função `requestByFlow { }` ela irá retornar um flow com a [classe `Result` do kotlin](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-result/)
-- Toda atividade desse projeto herda `BaseActivity` para inicialização.
+- There are 23 unit tests that can be easily run from Android Studio or from the root of the project by running `./gradlew :app:test`
+- To make a request with flow in the repository use the function `requestByFlow { }` it will return a flow with [kotlin's `Result` class](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin /-result/)
+- Every Activity in this project inherits `BaseActivity` for initialization.
 
 
 
