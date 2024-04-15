@@ -35,7 +35,7 @@ A interface é dividida em três seções principais:
 3. Crie sua api key em https://developer.marvel.com/account
 4. Salve sua api privada com o nome MARVEL_API_KEY em local.properties.
 5. Salve sua api publica com o nome MARVEL_PUB_API_KEY em local.properties.
-6. Sincronize o projeto com os arquivos do Gradle.
+6. Sincronize o projeto com os arquivos do Gradle pelo Android Studio ou utilize o terminal com `./gradlew build --refresh-dependencies` e depois .`/gradlew assembleDebug`.
 7. Execute a aplicação em um emulador ou dispositivo físico.
 
 ## Documentação e Decisões de Projeto
@@ -51,6 +51,7 @@ Este aplicativo foi construido com:
 
 Algumas considerações:
 
+- Existe 23 testes unitários que podem ser facilmente rodado pelo Android Studio ou pelo terminar na raiz do projeto executando `./gradlew :app:test`
 - Para realizar uma request com flow no repositório utilize a função `requestByFlow { }` ela irá retornar um flow com a [classe `Result` do kotlin](https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-result/)
 - Toda atividade desse projeto herda `BaseActivity` para inicialização.
 
