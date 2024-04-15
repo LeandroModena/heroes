@@ -5,6 +5,7 @@ import dev.modena.heroes.data.local.entity.Hero
 import dev.modena.heroes.data.remote.RemoteMarvel
 import dev.modena.heroes.shared.arch.BaseRepository
 import dev.modena.marvel.model.ResponseMarvel
+import dev.modena.marvel.repository.MarvelRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -14,17 +15,17 @@ import javax.inject.Inject
 class HeroRepository @Inject constructor(
     private val remoteMarvel: RemoteMarvel,
     private val heroDao: HeroDao
-) : BaseRepository() {
+) : BaseRepository(), MarvelRepository {
 
-    suspend fun getCharactersMarvel(): Flow<Result<ResponseMarvel>> {
+    override suspend fun getCharactersMarvel(): Flow<Result<ResponseMarvel>> {
         return requestByFlow { remoteMarvel.getInitialCharacters() }
     }
 
-    suspend fun getCharactersMarvelByName(query: String): Flow<Result<ResponseMarvel>> {
+    override suspend fun getCharactersMarvelByName(query: String): Flow<Result<ResponseMarvel>> {
         return requestByFlow { remoteMarvel.getCharactersByName(query) }
     }
 
-    suspend fun navigatePage(offset: Long, query: String): Flow<Result<ResponseMarvel>> {
+    override suspend fun navigatePage(offset: Long, query: String): Flow<Result<ResponseMarvel>> {
         return requestByFlow { remoteMarvel.navigatePages(offset, query) }
     }
 
@@ -36,7 +37,7 @@ class HeroRepository @Inject constructor(
         if (isFavorite) heroDao.delete(hero) else heroDao.insert(hero)
     }
 
-    suspend fun getListHeroes() = flow<List<Hero>> {
+    suspend fun getListHeroes() = flow {
         emit(heroDao.getHeroesSortedByName())
     }.flowOn(Dispatchers.IO)
 
