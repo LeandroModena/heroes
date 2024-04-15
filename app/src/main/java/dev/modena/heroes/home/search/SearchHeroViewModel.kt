@@ -131,7 +131,6 @@ class SearchHeroViewModel @Inject constructor(
                 }
             }
             _heroes.value = updatedList!!
-
         }
     }
 
@@ -141,6 +140,10 @@ class SearchHeroViewModel @Inject constructor(
 
     private fun hideLoading() {
         _isLoading.value = false
+    }
+
+    fun updateFavorite() {
+        navigationPage(_page.value!!.offset)
     }
 
 }

@@ -1,7 +1,9 @@
 package dev.modena.heroes.home.search
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,18 +33,26 @@ import androidx.compose.ui.unit.dp
 import dagger.hilt.android.AndroidEntryPoint
 import dev.modena.heroes.R
 import dev.modena.heroes.data.local.entity.Hero
+import dev.modena.heroes.home.detail.DetailHeroActivity
+import dev.modena.heroes.home.detail.DetailHeroActivity.Companion.CHANGE_STATUS_FAVORITE
 import dev.modena.heroes.shared.arch.BaseActivity
 import dev.modena.heroes.shared.model.Page
 import dev.modena.heroes.ui.theme.ErrorScreen
 import dev.modena.heroes.ui.theme.HeroesResultScreen
+import dev.modena.heroes.ui.theme.HeroesTheme
 import dev.modena.heroes.ui.theme.LoadingDataScreen
 import dev.modena.heroes.ui.theme.ScreenWithTopBar
-import dev.modena.heroes.ui.theme.HeroesTheme
 
 @AndroidEntryPoint
 class SearchHeroActivity : BaseActivity() {
 
     private val _viewModel: SearchHeroViewModel by viewModels()
+    private val onResultAddEvent =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == CHANGE_STATUS_FAVORITE) {
+                _viewModel.updateFavorite()
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +82,8 @@ class SearchHeroActivity : BaseActivity() {
                             onClickFavoriteHero = { isFavorite, hero ->
                                 _viewModel.saveOrDeleteFavoriteHero(isFavorite, hero)
                             },
-                            onClickPage = { _viewModel.navigationPage(it) }
+                            onClickPage = { _viewModel.navigationPage(it) },
+                            showDetailHero = { showDetailForResult(it) }
                         )
                     }
                 }
@@ -82,6 +93,12 @@ class SearchHeroActivity : BaseActivity() {
 
     override fun init() {
         _viewModel.initialize()
+    }
+
+    private fun showDetailForResult(hero: Hero) {
+        onResultAddEvent.launch(Intent(this, DetailHeroActivity::class.java).apply {
+            putExtra(Hero::class.java.simpleName, hero)
+        })
     }
 
 }
@@ -98,6 +115,7 @@ fun SearchScreen(
     queryHero: (query: String) -> Unit,
     onClickFavoriteHero: (isFavorite: Boolean, hero: Hero) -> Unit,
     onClickPage: (offset: Long) -> Unit,
+    showDetailHero: (hero: Hero) -> Unit
 ) {
     var query by rememberSaveable { mutableStateOf("") }
 
@@ -119,6 +137,7 @@ fun SearchScreen(
                     noResultMessage = stringResource(R.string.hero_not_found),
                     onClickFavoriteHero = onClickFavoriteHero,
                     onClickPage = onClickPage,
+                    showDetailHero = showDetailHero
                 )
             }
         }
@@ -175,5 +194,6 @@ fun SearchScreenPreview() {
         {},
         { _, _ ->
         },
+        {},
         {})
 }

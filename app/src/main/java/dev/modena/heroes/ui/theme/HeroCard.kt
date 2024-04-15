@@ -1,5 +1,7 @@
 package dev.modena.heroes.ui.theme
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,11 +32,15 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import dev.modena.heroes.R
 import dev.modena.heroes.data.local.entity.Hero
-import dev.modena.heroes.shared.util.showDetailHero
+import dev.modena.heroes.home.detail.DetailHeroActivity
 
 
 @Composable
-fun HeroCard(hero: Hero, onFavoriteClick: (isFavorite: Boolean) -> Unit) {
+fun HeroCard(
+    hero: Hero,
+    onFavoriteClick: (isFavorite: Boolean) -> Unit,
+    showDetailHero: (hero: Hero) -> Unit
+) {
     var isFavorite by remember { mutableStateOf(hero.isFavorite) }
     val context = LocalContext.current
 
@@ -47,7 +53,7 @@ fun HeroCard(hero: Hero, onFavoriteClick: (isFavorite: Boolean) -> Unit) {
         Box {
             Column(
                 modifier = Modifier
-                    .clickable { showDetailHero(context, hero) }
+                    .clickable { showDetailHero.invoke(hero) }
                     .padding(16.dp)
             ) {
                 AsyncImage(

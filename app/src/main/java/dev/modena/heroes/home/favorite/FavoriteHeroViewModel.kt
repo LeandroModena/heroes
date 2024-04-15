@@ -61,4 +61,8 @@ class FavoriteHeroViewModel @Inject constructor(
         }
     }
 
+    fun updateFavorite() {
+        getHeroesByPage(_page.value!!.offset)
+    }
+
 }

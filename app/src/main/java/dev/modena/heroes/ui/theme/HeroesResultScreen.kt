@@ -24,16 +24,23 @@ fun HeroesResultScreen(
     page: Page?,
     noResultMessage: String,
     onClickFavoriteHero: (isFavorite: Boolean, hero: Hero) -> Unit,
-    onClickPage: (offset: Long) -> Unit
+    onClickPage: (offset: Long) -> Unit,
+    showDetailHero: (hero: Hero) -> Unit
 ) {
     page?.let {
         if (heroes.isNotEmpty()) {
             LazyColumn {
                 items(heroes.size) {
                     val hero = heroes[it]
-                    HeroCard(hero) {
-                        onClickFavoriteHero.invoke(hero.isFavorite, hero)
-                    }
+                    HeroCard(
+                        hero = hero,
+                        onFavoriteClick = {
+                            onClickFavoriteHero.invoke(hero.isFavorite, hero)
+                        },
+                        showDetailHero = {
+                            showDetailHero.invoke(hero)
+                        }
+                    )
                 }
                 item {
                     Row(
@@ -75,6 +82,4 @@ fun HeroesResultScreen(
             NoResultScreen(noResultMessage)
         }
     } ?: Text(text = stringResource(R.string.no_data_to_present))
-
-
 }
