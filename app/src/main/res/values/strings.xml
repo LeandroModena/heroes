@@ -24,4 +24,5 @@
     <string name="unable_to_share_image">Não foi possivel compartilhar a imagem</string>
     <string name="details">Detalhes</string>
     <string name="home">Home</string>
+    <string name="not_hero_add">Nenhum herói adicionado.</string>
 </resources>

@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import dagger.hilt.android.AndroidEntryPoint
 import dev.modena.heroes.R
 import dev.modena.heroes.data.local.entity.Hero
@@ -69,6 +70,7 @@ fun FavoriteHeroScreen(
     HeroesResultScreen(
         heroes = heroes,
         page = page,
+        noResultMessage = stringResource(R.string.not_hero_add),
         onClickFavoriteHero = onClickFavoriteHero,
         onClickPage = onClickPage
     )

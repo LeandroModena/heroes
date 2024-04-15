@@ -22,8 +22,9 @@ import dev.modena.heroes.shared.model.Page
 fun HeroesResultScreen(
     heroes: List<Hero>,
     page: Page?,
+    noResultMessage: String,
     onClickFavoriteHero: (isFavorite: Boolean, hero: Hero) -> Unit,
-    onClickPage: (offset: Long) -> Unit,
+    onClickPage: (offset: Long) -> Unit
 ) {
     page?.let {
         if (heroes.isNotEmpty()) {
@@ -71,7 +72,7 @@ fun HeroesResultScreen(
                 }
             }
         } else {
-            NoResultScreen(stringResource(R.string.hero_not_found))
+            NoResultScreen(noResultMessage)
         }
     } ?: Text(text = stringResource(R.string.no_data_to_present))
 

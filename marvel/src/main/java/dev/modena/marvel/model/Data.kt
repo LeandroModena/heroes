@@ -1,6 +1,6 @@
 package dev.modena.marvel.model
 
-data class Data (
+data class Data(
     val offset: Long,
     val limit: Long,
     val total: Long,

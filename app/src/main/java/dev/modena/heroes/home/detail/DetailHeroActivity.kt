@@ -14,13 +14,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -29,7 +24,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -67,7 +61,6 @@ class DetailHeroActivity : BaseActivity() {
                         action = { onBackPressedDispatcher.onBackPressed() }) {
                         DetailHeroScreen(
                             hero = hero,
-                            onClickFavorite = { },
                             onClickShare = { _viewModel.onClickShareHero() }
                         )
                     }
@@ -99,7 +92,6 @@ class DetailHeroActivity : BaseActivity() {
 @Composable
 fun DetailHeroScreen(
     hero: Hero,
-    onClickFavorite: (isFavorite: Boolean) -> Unit,
     onClickShare: () -> Unit
 ) {
     var isFavorite by rememberSaveable { mutableStateOf(hero.isFavorite) }
@@ -146,21 +138,6 @@ fun DetailHeroScreen(
                 ) {
                     Text(text = stringResource(R.string.share))
                 }
-            }
-            IconButton(
-                onClick = {
-                    isFavorite = !isFavorite
-                    onClickFavorite.invoke(hero.isFavorite)
-                },
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(12.dp)
-            ) {
-                Icon(
-                    imageVector = if (isFavorite || hero.isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
-                    contentDescription = "Favorite",
-                    tint = if (isFavorite || hero.isFavorite) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
-                )
             }
         }
     }

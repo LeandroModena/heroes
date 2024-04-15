@@ -114,10 +114,11 @@ fun SearchScreen(
                 LoadingDataScreen()
             } else {
                 HeroesResultScreen(
-                    heroes,
-                    page,
-                    onClickFavoriteHero,
-                    onClickPage
+                    heroes = heroes,
+                    page = page,
+                    noResultMessage = stringResource(R.string.hero_not_found),
+                    onClickFavoriteHero = onClickFavoriteHero,
+                    onClickPage = onClickPage,
                 )
             }
         }
